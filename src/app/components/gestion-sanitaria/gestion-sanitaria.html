@@ -1,0 +1,287 @@
+<div class="alert-overlay" *ngIf="mostrarAlerta">
+
+  <div class="alert-box">
+    <h2>⚠ Vacunaciones Pendientes</h2>
+
+    <ul>
+      <li *ngFor="let alerta of alertaVacunas">
+        {{ alerta }}
+      </li>
+    </ul>
+
+    <button class="btn-primary" (click)="mostrarAlerta = false">
+      Entendido
+    </button>
+
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <h1 class="title">Gestión Sanitaria</h1>
+
+  <p class="subtitle">
+    Registro y seguimiento de controles sanitarios, vacunaciones y tratamientos veterinarios.
+  </p>
+
+  <form (ngSubmit)="registrar()" class="form-grid">
+
+    <!-- CARAVANA -->
+    <div class="form-group">
+      <label>N° Caravana *</label>
+
+      <div class="input-with-button">
+        <input
+          [(ngModel)]="registro.caravana"
+          name="caravana"
+          required
+          placeholder="Ej: A-00123"
+          (blur)="buscarAnimalPorCaravana()"
+        />
+
+        <button type="button" class="btn-search" (click)="buscarAnimalPorCaravana()" title="Buscar animal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+        <button type="button" class="btn-search" (click)="mostrarTodos()">📋</button>
+      </div>
+    </div>
+
+    <!-- FECHA -->
+    <div class="form-group">
+      <label>Fecha del Registro *</label>
+
+      <input
+        type="date"
+        [(ngModel)]="registro.fecha"
+        name="fecha"
+        required
+      />
+    </div>
+
+    <!-- TIPO -->
+    <div class="form-group">
+      <label>Tipo de Registro *</label>
+
+      <select [(ngModel)]="registro.tipoRegistro" name="tipoRegistro" required>
+        <option value="">Seleccione...</option>
+        <option value="Vacunación">Vacunación</option>
+        <option value="Tratamiento">Tratamiento</option>
+        <option value="Control Sanitario">Control Sanitario</option>
+        <option value="Desparasitación">Desparasitación</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+
+    <!-- MEDICAMENTO / VACUNA -->
+    <div class="form-group">
+      <label>Medicamento / Vacuna</label>
+
+      <input
+        [(ngModel)]="registro.medicamento"
+        name="medicamento"
+        placeholder="Ej: Fiebre Aftosa, Penicilina, Ivermectina"
+      />
+    </div>
+
+    <!-- DOSIS -->
+    <div class="form-group">
+      <label>Dosis</label>
+
+      <input
+        [(ngModel)]="registro.dosis"
+        name="dosis"
+        placeholder="Ej: 2 ml"
+      />
+    </div>
+
+    <!-- PRÓXIMA APLICACIÓN -->
+    <div class="form-group">
+      <label>Próxima Aplicación</label>
+
+      <input
+        type="date"
+        [(ngModel)]="registro.proximaVacunacion"
+        name="proximaVacunacion"
+      />
+    </div>
+
+    <!-- DIAGNOSTICO -->
+    <div class="form-group full">
+      <label>Diagnóstico</label>
+
+      <textarea
+        [(ngModel)]="registro.diagnostico"
+        name="diagnostico"
+        placeholder="Descripción del diagnóstico..."
+      ></textarea>
+    </div>
+
+    <!-- VETERINARIO -->
+    <div class="form-group">
+      <label>Veterinario Responsable</label>
+
+      <input
+        [(ngModel)]="registro.veterinario"
+        name="veterinario"
+        placeholder="Nombre del veterinario"
+      />
+    </div>
+
+    <!-- OBSERVACIONES -->
+    <div class="form-group full">
+      <label>Observaciones</label>
+
+      <textarea
+        [(ngModel)]="registro.observaciones"
+        name="observaciones"
+        placeholder="Observaciones adicionales..."
+      ></textarea>
+    </div>
+
+    <div class="form-group full">
+      <button class="btn-primary" type="submit">
+        Registrar Control Sanitario
+      </button>
+    </div>
+
+  </form>
+
+  <!-- MENSAJE -->
+  <div class="after-actions" *ngIf="registrado">
+    <h3>✓ Registro sanitario guardado exitosamente</h3>
+    <p>El registro ha sido agregado al historial sanitario del animal.</p>
+  </div>
+
+  <!-- HISTORIAL POR CARAVANA -->
+  <div class="historial-section" *ngIf="registro.caravana">
+
+    <h2 class="table-title">
+      Historial Sanitario - Caravana: {{ registro.caravana }}
+    </h2>
+
+    <div
+      class="historial-container"
+      *ngIf="obtenerHistorialPorCaravana(registro.caravana).length > 0; else sinHistorial"
+    >
+
+      <div
+        class="historial-card"
+        *ngFor="let hist of obtenerHistorialPorCaravana(registro.caravana)"
+      >
+
+        <div class="historial-header">
+          <span class="historial-tipo">{{ hist.tipoRegistro }}</span>
+          <span class="historial-fecha">{{ formatearFecha(hist.fecha) }}</span>
+        </div>
+
+        <div class="historial-body">
+
+          <p *ngIf="hist.medicamento">
+            <strong>Medicamento / Vacuna:</strong> {{ hist.medicamento }}
+          </p>
+
+          <p *ngIf="hist.dosis">
+            <strong>Dosis:</strong> {{ hist.dosis }}
+          </p>
+
+          <p *ngIf="hist.diagnostico">
+            <strong>Diagnóstico:</strong> {{ hist.diagnostico }}
+          </p>
+
+          <p *ngIf="hist.veterinario">
+            <strong>Veterinario:</strong> {{ hist.veterinario }}
+          </p>
+
+          <p *ngIf="hist.proximaVacunacion">
+            <strong>Próxima Aplicación:</strong>
+            {{ formatearFecha(hist.proximaVacunacion) }}
+          </p>
+
+          <p *ngIf="hist.observaciones">
+            <strong>Observaciones:</strong> {{ hist.observaciones }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <ng-template #sinHistorial>
+      <p class="sin-datos">No hay registros sanitarios para esta caravana.</p>
+    </ng-template>
+
+  </div>
+
+  <!-- LISTA COMPLETA -->
+  <div class="registros-section">
+
+    <h2 class="table-title">Todos los Registros Sanitarios</h2>
+
+    <div class="table-container">
+
+      <table class="registros-table">
+
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Caravana</th>
+            <th>Tipo</th>
+            <th>Medicamento / Vacuna</th>
+            <th>Dosis</th>
+            <th>Veterinario</th>
+            <th>Diagnóstico</th>
+            <th>Observaciones</th>
+            <th>Próxima Aplicación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let reg of registrosSanitarios">
+
+            <td>{{ formatearFecha(reg.fecha) }}</td>
+
+            <td>
+              <strong>{{ reg.caravana }}</strong>
+            </td>
+
+            <td>{{ reg.tipoRegistro }}</td>
+
+            <td>{{ reg.medicamento || '-' }}</td>
+
+            <td>{{ reg.dosis || '-' }}</td>
+
+            <td>{{ reg.veterinario || '-' }}</td>
+
+            <td>{{ reg.diagnostico || '-' }}</td>
+
+            <td>{{ reg.observaciones || '-' }}</td>
+
+            <td>
+              {{ reg.proximaVacunacion ? formatearFecha(reg.proximaVacunacion) : '-' }}
+            </td>
+
+            <td>
+              <button class="btn mini danger" (click)="eliminarRegistro(reg.id)">
+                Eliminar
+              </button>
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+

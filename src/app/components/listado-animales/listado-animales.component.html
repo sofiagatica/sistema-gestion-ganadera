@@ -1,0 +1,127 @@
+<div class="panel">
+
+  <h1 class="title">Listado de Animales</h1>
+  <p class="subtitle">Consulta de animales registrados en el sistema AgroSoft.</p>
+
+  <!-- BOTONES SUPERIORES -->
+  <div class="actions-top">
+    <div class="actions-right">
+      <button class="btn primary" routerLink="/alta-ganado">
+        + Registrar nuevo animal
+      </button>
+    </div>
+  </div>
+
+  <!-- BUSCADOR -->
+  <div class="toolbar">
+
+    <div class="search-group">
+      <input
+        type="text"
+        placeholder="Buscar por caravana, categoría o estado..."
+        [(ngModel)]="busqueda"
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-group">
+      <select [(ngModel)]="filtroEstado" class="select-input">
+        <option value="">Todos los estados</option>
+        <option value="Sano">Sano</option>
+        <option value="Vacunación Pendiente">Vacunación Pendiente</option>
+        <option value="En Tratamiento">En Tratamiento</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- TABLA -->
+  <div class="table-wrap">
+    <table class="tabla">
+
+      <thead>
+        <tr>
+          <th>Caravana</th>
+          <th>Categoría</th>
+          <th>Estado Productivo</th>
+          <th>Lote / Potrero</th>
+          <th>Tipo</th>
+          <th>Raza</th>
+          <th>Fecha Nac.</th>
+          <th>Edad</th>
+          <th>Peso (kg)</th>
+          <th>Estado Sanitario</th>
+          <th>Control Vet.</th>
+          <th>Observaciones</th>
+          <th>Registro</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let a of animalesFiltrados">
+
+          <td><strong>{{ a.caravana }}</strong></td>
+
+          <!-- CATEGORIA CORRECTA -->
+          <td>{{ a.categoria || '-' }}</td>
+
+          <td>{{ a.estadoProductivo || '-' }}</td>
+
+          <td>{{ a.lote || '-' }}</td>
+
+          <td>{{ a.tipo }}</td>
+
+          <td>{{ a.raza }}</td>
+
+          <!-- FECHA NACIMIENTO -->
+          <td>{{ a.fechaNac | date:'dd/MM/yyyy' }}</td>
+
+          <td>{{ getEdadMeses(a.fechaNac) }} meses</td>
+
+          <td>{{ a.peso }}</td>
+
+          <td>
+            <span class="chip" [ngClass]="chipClass(a.estado)">
+              {{ a.estado }}
+            </span>
+          </td>
+
+          <!-- CONTROL VETERINARIO -->
+          <td>
+            <span *ngIf="a.requiereControlVet" class="chip chip-warn">
+              Sí
+            </span>
+
+            <span *ngIf="!a.requiereControlVet">
+              No
+            </span>
+          </td>
+
+          <td class="obs">
+            {{ (a.notas || '-') | slice:0:60 }}
+            {{ (a.notas?.length > 60) ? '...' : '' }}
+          </td>
+
+          <td>{{ a.fechaRegistro | date:'dd/MM/yyyy' }}</td>
+
+          <td class="acciones">
+            <button class="btn mini" (click)="editar(a)">Editar</button>
+            <button class="btn mini danger" (click)="eliminar(a.id)">Eliminar</button>
+          </td>
+
+        </tr>
+
+        <tr *ngIf="animalesFiltrados.length === 0">
+          <td colspan="14" class="empty">
+            No hay animales para mostrar.
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

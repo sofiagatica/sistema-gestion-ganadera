@@ -1,0 +1,459 @@
+<div class="reportes-container">
+  <h1 class="title">Reportes y Estadísticas</h1>
+  <p class="subtitle">Análisis y reportes del sistema AgroSoft</p>
+
+  <!-- TABS NAVEGACIÓN -->
+  <div class="tabs-container">
+    <div class="tabs-nav">
+      <button 
+        class="tab-btn" 
+        [class.active]="tabActiva === 'stock'"
+        (click)="cambiarTab('stock')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>Stock</span>
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="tabActiva === 'sanitario'"
+        (click)="cambiarTab('sanitario')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span>Sanitario</span>
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="tabActiva === 'ventas'"
+        (click)="cambiarTab('ventas')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <span>Ventas</span>
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="tabActiva === 'comparativo'"
+        (click)="cambiarTab('comparativo')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        <span>Comparativo</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENIDO DE TABS -->
+  <div class="tabs-content">
+    <!-- TAB STOCK -->
+    <div class="tab-panel" [class.active]="tabActiva === 'stock'">
+      <!-- STOCK TOTAL Y POR CATEGORÍAS -->
+      <section class="report-section">
+    <h2 class="section-title">Stock Total y por Categorías</h2>
+    
+    <div class="filters">
+      <button 
+        [class.active]="categoriaSeleccionada === 'todas'"
+        (click)="cambiarCategoria('todas')"
+        class="filter-btn">
+        Todas
+      </button>
+      <button 
+        [class.active]="categoriaSeleccionada === 'cria'"
+        (click)="cambiarCategoria('cria')"
+        class="filter-btn">
+        Cría
+      </button>
+      <button 
+        [class.active]="categoriaSeleccionada === 'recria'"
+        (click)="cambiarCategoria('recria')"
+        class="filter-btn">
+        Recría
+      </button>
+      <button 
+        [class.active]="categoriaSeleccionada === 'engorde'"
+        (click)="cambiarCategoria('engorde')"
+        class="filter-btn">
+        Engorde
+      </button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Stock Total</h3>
+        <p class="stat-number">{{ stockTotal }}</p>
+        <p class="stat-label">Animales</p>
+      </div>
+      <div class="stat-card">
+        <h3>Cría</h3>
+        <p class="stat-number">{{ stockPorCategoria.cria }}</p>
+        <p class="stat-label">Animales</p>
+      </div>
+      <div class="stat-card">
+        <h3>Recría</h3>
+        <p class="stat-number">{{ stockPorCategoria.recria }}</p>
+        <p class="stat-label">Animales</p>
+      </div>
+      <div class="stat-card">
+        <h3>Engorde</h3>
+        <p class="stat-number">{{ stockPorCategoria.engorde }}</p>
+        <p class="stat-label">Animales</p>
+      </div>
+    </div>
+      </section>
+    </div>
+
+    <!-- TAB SANITARIO -->
+    <div class="tab-panel" [class.active]="tabActiva === 'sanitario'">
+      <!-- ESTADÍSTICAS SANITARIAS -->
+      <section class="report-section">
+    <h2 class="section-title">Estadísticas Sanitarias</h2>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22402a" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Total Registros</h3>
+        <p class="stat-number">{{ estadisticasSanitarias.totalRegistros }}</p>
+        <p class="stat-label">Registros sanitarios</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22402a" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Vacunaciones</h3>
+        <p class="stat-number">{{ estadisticasSanitarias.vacunaciones }}</p>
+        <p class="stat-label">Vacunas aplicadas</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22402a" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <h3>Tratamientos</h3>
+        <p class="stat-number">{{ estadisticasSanitarias.tratamientos }}</p>
+        <p class="stat-label">Tratamientos realizados</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22402a" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3>Próximas Vacunaciones</h3>
+        <p class="stat-number">{{ estadisticasSanitarias.proximasVacunaciones }}</p>
+        <p class="stat-label">Pendientes</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORIAL SANITARIO CONSOLIDADO -->
+  <section class="report-section">
+    <h2 class="section-title">Historial Sanitario Consolidado</h2>
+    
+    <div class="table-container" *ngIf="historialSanitario.length > 0">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Caravana</th>
+            <th>Tipo</th>
+            <th>Vacuna/Tratamiento</th>
+            <th>Veterinario</th>
+            <th>Próxima Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let registro of historialSanitario">
+            <td>{{ formatearFecha(registro.fecha) }}</td>
+            <td>{{ registro.caravana }}</td>
+            <td>
+              <span class="badge" 
+                    [class.vacunacion]="registro.tipoRegistro === 'Vacunación'" 
+                    [class.tratamiento]="registro.tipoRegistro === 'Tratamiento'"
+                    [class.control]="registro.tipoRegistro === 'Control Sanitario'">
+                {{ registro.tipoRegistro }}
+              </span>
+            </td>
+            <td>{{ registro.medicamento || registro.vacuna || registro.tratamiento || '-' }}</td>
+            <td>{{ registro.veterinario || '-' }}</td>
+            <td>{{ registro.proximaVacunacion ? formatearFecha(registro.proximaVacunacion) : '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p *ngIf="historialSanitario.length === 0" class="no-data">No hay registros sanitarios aún.</p>
+      </section>
+    </div>
+
+    <!-- TAB VENTAS -->
+    <div class="tab-panel" [class.active]="tabActiva === 'ventas'">
+      <!-- D. RESUMEN VISUAL - DASHBOARD CARDS -->
+      <section class="report-section dashboard-section">
+        <h2 class="section-title">Resumen Visual</h2>
+        <div class="dashboard-cards">
+          <div class="dashboard-card ingreso">
+            <span class="dashboard-emoji">💰</span>
+            <h3>Ingreso Total</h3>
+            <p class="dashboard-value">$ {{ formatearMonto(estadisticasVentas.montoTotal) }}</p>
+          </div>
+          <div class="dashboard-card animales">
+            <span class="dashboard-emoji">🐄</span>
+            <h3>Animales Vendidos</h3>
+            <p class="dashboard-value">{{ estadisticasVentas.totalVentas }}</p>
+          </div>
+          <div class="dashboard-card promedio">
+            <span class="dashboard-emoji">📊</span>
+            <h3>Promedio por Venta</h3>
+            <p class="dashboard-value">$ {{ formatearMonto(estadisticasVentas.promedioVenta) }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- A. LISTADO DE VENTAS -->
+      <section class="report-section">
+        <h2 class="section-title">Listado de Ventas</h2>
+        <div class="table-container" *ngIf="getVentasOrdenadas().length > 0">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Caravana</th>
+                <th>Cliente/Comprador</th>
+                <th>Tipo de operación</th>
+                <th>Monto</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let venta of getVentasOrdenadas()">
+                <td>{{ formatearFecha(venta.fecha) }}</td>
+                <td>{{ getCaravanasVenta(venta) }}</td>
+                <td>{{ venta.comprador || '-' }}</td>
+                <td>{{ venta.tipoOperacion || '-' }}</td>
+                <td>$ {{ formatearMonto(obtenerMontoVenta(venta)) }}</td>
+                <td>
+                  <div class="acciones-factura">
+                    <button class="btn-factura" (click)="imprimirFactura(venta)" title="Imprimir">
+                      Imprimir
+                    </button>
+                    <button class="btn-factura btn-pdf" (click)="descargarFacturaPDF(venta)" title="Descargar PDF">
+                      PDF
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p *ngIf="getVentasOrdenadas().length === 0" class="no-data">No hay ventas registradas aún.</p>
+      </section>
+
+      <!-- C. GRÁFICO DE VENTAS POR MES -->
+      <section class="report-section" *ngIf="getVentasParaGrafico().length > 0">
+        <h2 class="section-title">Gráfico de Ventas por Mes</h2>
+        <div class="chart-container">
+          <div class="chart-bars" *ngFor="let dato of getVentasParaGrafico()">
+            <span class="chart-label">{{ dato.mes }}</span>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" [style.width.%]="(dato.monto / getMaxMontoGrafico()) * 100"></div>
+              <span class="chart-value">$ {{ formatearMonto(dato.monto) }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ESTADÍSTICAS ADICIONALES (Sociedad Rural, etc.) -->
+      <section class="report-section">
+    <h2 class="section-title">Estadísticas Detalladas</h2>
+    
+    <div class="stats-grid">
+      <div class="stat-card highlight">
+        <div class="stat-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22402a" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Sociedad Rural</h3>
+        <p class="stat-number">{{ estadisticasVentas.ventasSociedadRural }}</p>
+        <p class="stat-label">Ventas integradas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAS POR TIPO DE OPERACIÓN -->
+  <section class="report-section" *ngIf="tieneVentasPorTipo()">
+    <h2 class="section-title">Ventas por Tipo de Operación</h2>
+    
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tipo de Operación</th>
+            <th>Cantidad</th>
+            <th>Monto Total</th>
+            <th>Promedio</th>
+            <th>% del Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tipo of getTiposOperacion()">
+            <td><strong>{{ tipo }}</strong></td>
+            <td>{{ estadisticasVentas.ventasPorTipo[tipo].cantidad }}</td>
+            <td>$ {{ formatearMonto(estadisticasVentas.ventasPorTipo[tipo].monto) }}</td>
+            <td>$ {{ formatearMonto(estadisticasVentas.ventasPorTipo[tipo].monto / estadisticasVentas.ventasPorTipo[tipo].cantidad) }}</td>
+            <td>{{ calcularPorcentaje(estadisticasVentas.ventasPorTipo[tipo].monto, estadisticasVentas.montoTotal) }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- REPORTES DE VENTAS Y EVOLUCIÓN ECONÓMICA -->
+  <section class="report-section">
+    <h2 class="section-title">Evolución de Ventas por Período</h2>
+    
+    <div class="filters">
+      <button 
+        [class.active]="periodoSeleccionado === 'mes'"
+        (click)="cambiarPeriodo('mes')"
+        class="filter-btn">
+        Mensual
+      </button>
+      <button 
+        [class.active]="periodoSeleccionado === 'trimestre'"
+        (click)="cambiarPeriodo('trimestre')"
+        class="filter-btn">
+        Trimestral
+      </button>
+      <button 
+        [class.active]="periodoSeleccionado === 'anual'"
+        (click)="cambiarPeriodo('anual')"
+        class="filter-btn">
+        Anual
+      </button>
+    </div>
+
+    <div class="table-container" *ngIf="ventasMensuales.length > 0">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Período</th>
+            <th>Cantidad de Ventas</th>
+            <th>Monto Total ($)</th>
+            <th>Promedio por Venta ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let venta of ventasMensuales">
+            <td>{{ venta.mes }}</td>
+            <td>{{ venta.cantidad }}</td>
+            <td>$ {{ formatearMonto(venta.monto) }}</td>
+            <td>$ {{ calcularPromedio(venta.monto, venta.cantidad) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p *ngIf="ventasMensuales.length === 0" class="no-data">No hay ventas registradas aún.</p>
+
+    <div class="summary-card" *ngIf="ventasMensuales.length > 0">
+      <h3>Resumen del Período</h3>
+      <div class="summary-grid">
+        <div>
+          <p class="summary-label">Total de Ventas</p>
+          <p class="summary-value">{{ getTotalVentas() }} animales</p>
+        </div>
+        <div>
+          <p class="summary-label">Monto Total</p>
+          <p class="summary-value">$ {{ formatearMonto(getTotalMonto()) }}</p>
+        </div>
+      </div>
+    </div>
+      </section>
+    </div>
+
+    <!-- TAB COMPARATIVO -->
+    <div class="tab-panel" [class.active]="tabActiva === 'comparativo'">
+      <!-- COMPARATIVOS POR PERÍODO -->
+      <section class="report-section">
+    <h2 class="section-title">Comparativos por Período</h2>
+    
+    <div class="comparison-grid">
+      <div class="comparison-card">
+        <h3>Período Actual</h3>
+        <div class="comparison-item">
+          <span class="comparison-label">Ventas:</span>
+          <span class="comparison-value">{{ comparativoPeriodos.periodoActual.ventas }}</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-label">Monto:</span>
+          <span class="comparison-value">$ {{ formatearMonto(comparativoPeriodos.periodoActual.monto) }}</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-label">Stock:</span>
+          <span class="comparison-value">{{ comparativoPeriodos.periodoActual.stock }}</span>
+        </div>
+      </div>
+
+      <div class="comparison-card">
+        <h3>Período Anterior</h3>
+        <div class="comparison-item">
+          <span class="comparison-label">Ventas:</span>
+          <span class="comparison-value">{{ comparativoPeriodos.periodoAnterior.ventas }}</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-label">Monto:</span>
+          <span class="comparison-value">$ {{ formatearMonto(comparativoPeriodos.periodoAnterior.monto) }}</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-label">Stock:</span>
+          <span class="comparison-value">{{ comparativoPeriodos.periodoAnterior.stock }}</span>
+        </div>
+      </div>
+
+      <div class="comparison-card highlight">
+        <h3>Variación</h3>
+        <div class="comparison-item">
+          <span class="comparison-label">Ventas:</span>
+          <span class="comparison-value" [class.positive]="getVariacionVentas() > 0" [class.negative]="getVariacionVentas() < 0">
+            {{ getVariacionVentas() > 0 ? '+' : '' }}{{ getVariacionVentas() }}
+            <span class="percentage">({{ getVariacionVentas() !== 0 ? (getPorcentajeVariacion(comparativoPeriodos.periodoActual.ventas, comparativoPeriodos.periodoAnterior.ventas) > 0 ? '+' : '') + getPorcentajeVariacion(comparativoPeriodos.periodoActual.ventas, comparativoPeriodos.periodoAnterior.ventas).toFixed(1) + '%' : '0%' }})</span>
+          </span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-label">Monto:</span>
+          <span class="comparison-value" [class.positive]="getVariacionMonto() > 0" [class.negative]="getVariacionMonto() < 0">
+            {{ getVariacionMonto() > 0 ? '+' : '' }}$ {{ formatearMonto(getVariacionMonto()) }}
+            <span class="percentage">({{ getVariacionMonto() !== 0 ? (getPorcentajeVariacion(comparativoPeriodos.periodoActual.monto, comparativoPeriodos.periodoAnterior.monto) > 0 ? '+' : '') + getPorcentajeVariacion(comparativoPeriodos.periodoActual.monto, comparativoPeriodos.periodoAnterior.monto).toFixed(1) + '%' : '0%' }})</span>
+          </span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-label">Stock:</span>
+          <span class="comparison-value" [class.positive]="getVariacionStock() > 0" [class.negative]="getVariacionStock() < 0">
+            {{ getVariacionStock() > 0 ? '+' : '' }}{{ getVariacionStock() }}
+          </span>
+        </div>
+      </div>
+    </div>
+      </section>
+    </div>
+  </div>
+</div>
+

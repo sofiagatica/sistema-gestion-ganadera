@@ -1,0 +1,245 @@
+<div class="panel">
+  <h1 class="title">Registro de Venta de Animales</h1>
+  <p class="subtitle">
+    Registro de ventas de animales en pie dentro del sistema AgroSoft.
+  </p>
+
+  <form (ngSubmit)="registrar()" class="form-grid">
+
+    <!-- ================== INFORMACIÓN DEL GANADO ================== -->
+    <h3 class="section-title">Información del Ganado</h3>
+
+    <!-- CARAVANA -->
+    <div class="form-group">
+      <label>N° Caravana / Identificación <span class="required">*</span></label>
+
+      <div class="input-with-button">
+        <input
+          [(ngModel)]="venta.caravana"
+          name="caravana"
+          required
+          placeholder="Ej: A-00123"
+          (blur)="buscarAnimalPorCaravana()"
+          [class.error]="submitted && formErrors.caravana"
+        />
+
+        <button type="button" class="btn-search" (click)="buscarAnimalPorCaravana()" title="Buscar animal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </div>
+
+      <span class="error-message" *ngIf="submitted && formErrors.caravana">
+        {{ formErrors.caravana }}
+      </span>
+    </div>
+
+    <!-- TIPO -->
+    <div class="form-group">
+      <label>Tipo de Ganado</label>
+      <input [(ngModel)]="venta.tipoGanado" name="tipoGanado" readonly />
+    </div>
+
+    <!-- RAZA -->
+    <div class="form-group">
+      <label>Raza</label>
+      <input [(ngModel)]="venta.raza" name="raza" readonly />
+    </div>
+
+    <!-- SEXO -->
+    <div class="form-group">
+      <label>Sexo</label>
+      <input [(ngModel)]="venta.sexo" name="sexo" readonly />
+    </div>
+
+    <!-- PESO -->
+    <div class="form-group">
+      <label>Peso (kg)</label>
+      <input
+        type="number"
+        [(ngModel)]="venta.pesoActual"
+        name="pesoActual"
+        step="0.01"
+      />
+    </div>
+
+    <!-- CATEGORÍA -->
+    <div class="form-group">
+      <label>Categoría</label>
+      <input [(ngModel)]="venta.categoria" name="categoria" readonly />
+    </div>
+
+    <!-- LOTE / POTRERO -->
+    <div class="form-group">
+      <label>Lote / Potrero</label>
+      <input [(ngModel)]="venta.lote" name="lote" readonly />
+    </div>
+
+    <!-- ESTADO SANITARIO -->
+    <div class="form-group">
+      <label>Estado Sanitario</label>
+      <input [(ngModel)]="venta.estadoSanitario" name="estadoSanitario" readonly />
+    </div>
+
+    <!-- FECHA NACIMIENTO -->
+    <div class="form-group">
+      <label>Fecha de Nacimiento</label>
+      <input
+        type="date"
+        [(ngModel)]="venta.fechaNacimiento"
+        name="fechaNacimiento"
+        readonly
+      />
+    </div>
+
+    <!-- PRECIO DEL ANIMAL -->
+    <div class="form-group">
+      <label>Precio del Animal ($)</label>
+      <input
+        type="number"
+        [(ngModel)]="venta.precio"
+        name="precio"
+        step="0.01"
+        placeholder="0.00"
+      />
+    </div>
+
+    <!-- BOTÓN AGREGAR -->
+    <div class="form-group full">
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="agregarAnimalVenta()"
+      >
+        ➕ Agregar Animal a la Venta
+      </button>
+    </div>
+
+    <!-- TABLA ANIMALES AGREGADOS -->
+    <div class="form-group full" *ngIf="animalesVenta.length > 0">
+      <h3 class="section-title">Animales en la Venta</h3>
+
+      <div class="table-container">
+        <table class="ventas-table">
+          <thead>
+            <tr>
+              <th>Caravana</th>
+              <th>Raza</th>
+              <th>Peso</th>
+              <th>Precio</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let animal of animalesVenta">
+              <td>{{ animal.caravana }}</td>
+              <td>{{ animal.raza }}</td>
+              <td>{{ animal.pesoActual }}</td>
+              <td>$ {{ animal.precio }}</td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn-delete"
+                  (click)="eliminarAnimalVenta(animal.caravana)"
+                  title="Quitar animal"
+                >
+                  ❌
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ================== INFORMACIÓN DE LA VENTA ================== -->
+    <h3 class="section-title">Información de la Venta</h3>
+
+    <!-- ID VENTA -->
+    <div class="form-group">
+      <label>ID Venta</label>
+      <input [(ngModel)]="venta.idVenta" name="idVenta" readonly />
+    </div>
+
+    <!-- CLIENTE -->
+    <div class="form-group">
+      <label>Cliente / Comprador <span class="required">*</span></label>
+
+      <input
+        [(ngModel)]="venta.comprador"
+        name="comprador"
+        required
+        placeholder="Nombre del cliente"
+        [class.error]="submitted && formErrors.comprador"
+      />
+
+      <span class="error-message" *ngIf="submitted && formErrors.comprador">
+        {{ formErrors.comprador }}
+      </span>
+    </div>
+
+    <!-- FECHA VENTA -->
+    <div class="form-group">
+      <label>Fecha de Venta <span class="required">*</span></label>
+
+      <input
+        type="date"
+        [(ngModel)]="venta.fecha"
+        name="fecha"
+        required
+        [class.error]="submitted && formErrors.fecha"
+      />
+
+      <span class="error-message" *ngIf="submitted && formErrors.fecha">
+        {{ formErrors.fecha }}
+      </span>
+    </div>
+
+    <!-- CANTIDAD AUTOMÁTICA -->
+    <div class="form-group">
+      <label>Cantidad de Animales</label>
+      <input type="number" [ngModel]="animalesVenta.length" name="cantidad" readonly />
+    </div>
+
+    <!-- TOTAL AUTOMÁTICO -->
+    <div class="form-group">
+      <label>Total ($)</label>
+      <input type="number" [ngModel]="totalVenta" name="total" readonly />
+    </div>
+
+    <!-- TIPO OPERACIÓN -->
+    <div class="form-group">
+      <label>Tipo de Operación <span class="required">*</span></label>
+
+      <select
+        [(ngModel)]="venta.tipoOperacion"
+        name="tipoOperacion"
+        required
+        [class.error]="submitted && formErrors.tipoOperacion"
+      >
+        <option value="">Seleccione...</option>
+        <option value="Venta Directa">Venta Directa</option>
+        <option value="Remate">Remate</option>
+        <option value="Consignación">Consignación</option>
+        <option value="Otro">Otro</option>
+      </select>
+
+      <span class="error-message" *ngIf="submitted && formErrors.tipoOperacion">
+        {{ formErrors.tipoOperacion }}
+      </span>
+    </div>
+
+    <!-- BOTÓN REGISTRAR -->
+    <div class="form-group full">
+      <button class="btn-primary" type="submit">
+        Registrar Venta
+      </button>
+    </div>
+
+  </form>
+</div>
+

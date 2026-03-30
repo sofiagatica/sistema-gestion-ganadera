@@ -1,0 +1,95 @@
+<header class="main-header">
+
+  <nav class="navbar">
+    <div class="nav-container">
+
+      <!-- LOGO -->
+      <div class="logo">
+        <span class="logo-icon">🐄</span>
+        <span class="logo-text">AgroSoft</span>
+      </div>
+
+      <!-- LINKS DESKTOP -->
+      <div class="nav-links-desktop">
+
+        <a *ngIf="!usuario" routerLink="/" routerLinkActive="active">
+         Inicio
+        </a>
+
+        <a *ngIf="rol === 'campo'" routerLink="/alta-ganado" routerLinkActive="active">
+          Registro
+        </a>
+
+        <a *ngIf="rol === 'veterinario'" routerLink="/gestion-sanitaria" routerLinkActive="active">
+          Sanitario
+        </a>
+
+        <a *ngIf="rol === 'admin' || rol === 'administracion'" routerLink="/ventas" routerLinkActive="active">
+          Ventas
+        </a>
+
+        <a *ngIf="rol === 'admin' || rol === 'administracion'" routerLink="/reportes" routerLinkActive="active">
+          Reportes
+        </a>
+
+      </div>
+
+      <!-- USUARIO + ROL + LOGOUT -->
+      <div class="user-box" *ngIf="usuario && rol">
+        <span class="user-label">Usuario: <strong>{{ usuario }}</strong></span>
+        <span class="user-sep">|</span>
+        <span class="user-label">Rol: <strong>{{ rolNombre }}</strong></span>
+        <span class="user-sep">|</span>
+        <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+      </div>
+
+      <!-- BOTON MENU MOBILE -->
+      <button class="menu-toggle" (click)="toggleSidebar()" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- OVERLAY -->
+  <div class="sidebar-overlay" [class.active]="isSidebarOpen" (click)="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" [class.open]="isSidebarOpen">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-icon">🐄</span>
+        <span class="logo-textt">AgroSoft</span>
+      </div>
+
+      <button class="sidebar-close" (click)="closeSidebar()" aria-label="Cerrar menú">×</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/" (click)="closeSidebar()">Inicio</a>
+
+      <a *ngIf="rol === 'campo'" routerLink="/alta-ganado" (click)="closeSidebar()">
+        Registro de Animales
+      </a>
+
+      <a *ngIf="rol === 'veterinario'" routerLink="/gestion-sanitaria" (click)="closeSidebar()">
+        Gestión Sanitaria
+      </a>
+
+      <a *ngIf="rol === 'admin' || rol === 'administracion'" routerLink="/ventas" (click)="closeSidebar()">
+        Gestión de Ventas
+      </a>
+
+      <a *ngIf="rol === 'admin' || rol === 'administracion'" routerLink="/reportes" (click)="closeSidebar()">
+        Reportes
+      </a>
+
+      <button class="logout-btn sidebar-logout" (click)="logout()">
+        Cerrar sesión
+      </button>
+    </nav>
+  </aside>
+
+</header>

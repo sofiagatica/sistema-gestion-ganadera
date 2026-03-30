@@ -1,0 +1,128 @@
+.panel {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.tabla th,
+.tabla td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.tabla th {
+  background: #f5f7f9;
+  font-weight: 600;
+}
+
+.tabla tr:hover {
+  background: #f9fbfc;
+}
+
+.chip {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: white;
+}
+
+.chip-ok {
+  background: #2e7d32;
+}
+
+.chip-warn {
+  background: #f9a825;
+}
+
+.chip-bad {
+  background: #c62828;
+}
+
+.obs {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn {
+  padding: 4px 8px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn.mini {
+  font-size: 12px;
+}
+
+.btn.danger {
+  background: #c62828;
+  color: white;
+}
+
+.actions-top {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0;
+}
+
+.btn.primary {
+  background: #2e7d32;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn.primary:hover {
+  background: #1b5e20;
+}
+
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.search-group {
+  flex: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.filter-group {
+  min-width: 220px;
+}
+
+.select-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}

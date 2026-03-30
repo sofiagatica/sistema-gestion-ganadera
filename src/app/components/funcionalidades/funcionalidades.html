@@ -1,0 +1,79 @@
+<section class="hero" data-aos="fade-down">
+  <div class="hero-content">
+    <h1>Funcionalidades del Sistema</h1>
+    <p class="hero-subtitle">Descubre todas las herramientas disponibles en AgroSoft</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="funcionalidades-grid">
+    <div 
+      *ngFor="let func of funcionalidades; let i = index" 
+      class="funcionalidad-card"
+      [attr.data-aos]="'fade-up'"
+      [attr.data-aos-delay]="i * 100"
+    >
+      <div class="funcionalidad-icon">{{ func.icon }}</div>
+      <h2>{{ func.titulo }}</h2>
+      <p>{{ func.descripcion }}</p>
+      <div class="funcionalidad-buttons">
+        <button 
+          class="btn-funcionalidad btn-info" 
+          (click)="abrirModal(func.id)"
+          [attr.data-aos]="'zoom-in'"
+          [attr.data-aos-delay]="(i * 100) + 200"
+        >
+          ℹ️ Ver Detalles
+        </button>
+        <a 
+          *ngIf="func.disponible"
+          [routerLink]="func.ruta" 
+          class="btn-funcionalidad btn-primary"
+          [attr.data-aos]="'zoom-in'"
+          [attr.data-aos-delay]="(i * 100) + 300"
+        >
+          🚀 Acceder
+        </a>
+        <button 
+          *ngIf="!func.disponible"
+          class="btn-funcionalidad btn-disabled" 
+          disabled
+        >
+          ⏳ Próximamente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modals para cada funcionalidad -->
+<app-modal 
+  *ngFor="let func of funcionalidades"
+  [title]="func.titulo"
+  [isOpen]="modalAbierto === func.id"
+  (closeModal)="cerrarModal()"
+>
+  <div class="modal-content">
+    <div class="modal-icon-large">{{ func.icon }}</div>
+    <p class="modal-description">{{ func.detalles }}</p>
+    
+    <h3 class="modal-subtitle">Características principales:</h3>
+    <ul class="modal-features">
+      <li *ngFor="let caracteristica of func.caracteristicas">
+        <span class="check-icon">✓</span>
+        {{ caracteristica }}
+      </li>
+    </ul>
+    
+    <div class="modal-actions" *ngIf="func.disponible">
+      <a 
+        [routerLink]="func.ruta" 
+        class="btn-modal-primary"
+        (click)="cerrarModal()"
+      >
+        Acceder a {{ func.titulo }}
+      </a>
+    </div>
+  </div>
+</app-modal>
+

@@ -1,0 +1,185 @@
+<div class="panel">
+
+  <h1 class="title">Registro de Nuevo Animal</h1>
+  <p class="subtitle">Carga de datos del animal dentro del sistema AgroSoft.</p>
+
+  <form (ngSubmit)="registrar()" class="form-grid">
+
+    <!-- Caravana -->
+    <div class="form-group">
+      <label>N° Caravana *</label>
+      <input
+        [(ngModel)]="animal.caravana"
+        name="caravana"
+        placeholder="Ej: A-00123"
+        [class.error]="submitted && formErrors.caravana">
+
+      <span class="error-message" *ngIf="submitted && formErrors.caravana">
+        {{ formErrors.caravana }}
+      </span>
+    </div>
+
+    <!-- Tipo -->
+    <div class="form-group">
+      <label>Tipo de Ganado</label>
+      <input type="text" value="Bovino" disabled />
+    </div>
+
+    <!-- Sexo -->
+    <div class="form-group">
+      <label>Sexo</label>
+      <select [(ngModel)]="animal.sexo" name="sexo">
+        <option value="">Seleccione...</option>
+        <option>Macho</option>
+        <option>Hembra</option>
+      </select>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label>Categoría</label>
+      <select [(ngModel)]="animal.categoria" name="categoria">
+        <option value="">Seleccione...</option>
+        <option>Ternero/a</option>
+        <option>Vaquillona</option>
+        <option>Novillo</option>
+        <option>Vaca</option>
+        <option>Toro</option>
+      </select>
+    </div>
+
+    <!-- Raza -->
+    <div class="form-group">
+      <label>Raza *</label>
+      <select
+        [(ngModel)]="animal.raza"
+        name="raza"
+        [class.error]="submitted && formErrors.raza">
+
+        <option value="">Seleccione...</option>
+        <option>Aberdeen Angus</option>
+        <option>Hereford</option>
+        <option>Braford</option>
+        <option>Brangus</option>
+        <option>Criolla</option>
+        <option>Holando Argentino</option>
+      </select>
+
+      <span class="error-message" *ngIf="submitted && formErrors.raza">
+        {{ formErrors.raza }}
+      </span>
+    </div>
+
+    <!-- Fecha -->
+    <div class="form-group">
+      <label>Fecha de Nacimiento *</label>
+      <input
+        type="date"
+        [(ngModel)]="animal.fechaNac"
+        name="fechaNac"
+        [class.error]="submitted && formErrors.fechaNac">
+
+      <span class="error-message" *ngIf="submitted && formErrors.fechaNac">
+        {{ formErrors.fechaNac }}
+      </span>
+    </div>
+
+    <!-- Peso -->
+    <div class="form-group">
+      <label>Peso *</label>
+      <input
+        type="number"
+        [(ngModel)]="animal.peso"
+        name="peso"
+        [class.error]="submitted && formErrors.peso">
+
+      <span class="error-message" *ngIf="submitted && formErrors.peso">
+        {{ formErrors.peso }}
+      </span>
+    </div>
+
+    <!-- Estado sanitario -->
+    <div class="form-group">
+      <label>Estado *</label>
+      <select
+        [(ngModel)]="animal.estado"
+        name="estado"
+        [class.error]="submitted && formErrors.estado">
+
+        <option value="">Seleccione...</option>
+        <option>Sano</option>
+        <option>Vacunación Pendiente</option>
+        <option>En Tratamiento</option>
+      </select>
+
+      <span class="error-message" *ngIf="submitted && formErrors.estado">
+        {{ formErrors.estado }}
+      </span>
+    </div>
+
+    <!-- Estado Productivo -->
+    <div class="form-group">
+      <label>Estado Productivo</label>
+      <select [(ngModel)]="animal.estadoProductivo" name="estadoProductivo">
+        <option value="">Seleccione...</option>
+        <option>Cría</option>
+        <option>Recría</option>
+        <option>Engorde</option>
+      </select>
+    </div>
+
+    <!-- Lote / Potrero -->
+    <div class="form-group">
+      <label>Lote / Potrero</label>
+      <select [(ngModel)]="animal.lote" name="lote">
+        <option value="">Seleccione...</option>
+        <option>Lote 1</option>
+        <option>Lote 2</option>
+        <option>Lote 3</option>
+        <option>Potrero A</option>
+        <option>Potrero B</option>
+      </select>
+    </div>
+
+    <!-- Checkbox -->
+    <div class="form-group full">
+      <label>
+        <input
+          type="checkbox"
+          [(ngModel)]="animal.requiereControlVet"
+          name="requiereControlVet">
+        Requiere control veterinario
+      </label>
+    </div>
+
+    <!-- Notas -->
+    <div class="form-group full">
+      <label>Notas</label>
+      <textarea [(ngModel)]="animal.notas" name="notas"></textarea>
+    </div>
+
+    <!-- BOTONES -->
+    <button class="btn-primary" type="submit">
+      {{ modoEdicion ? 'Actualizar Animal' : 'Registrar Animal' }}
+    </button>
+
+    <button class="btn-primary" type="button" (click)="verListado()">
+      Ver listado
+    </button>
+
+  </form>
+
+  <!-- MENSAJE -->
+  <div class="after-actions" *ngIf="registrado">
+    <div class="success-message">
+      <h3>
+        {{ modoEdicion ? 'Animal actualizado correctamente' : 'Animal registrado correctamente' }}
+      </h3>
+      <p>
+        El animal con caravana <strong>{{ animal.caravana }}</strong>
+        fue guardado en el sistema.
+      </p>
+    </div>
+  </div>
+
+</div>

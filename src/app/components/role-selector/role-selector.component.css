@@ -1,0 +1,95 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f1f5f3, #e6f0eb);
+}
+
+.container {
+  padding: 15px 40px 40px 40px;
+  min-height: 100vh;
+}
+
+/* --- LOGOS ARRIBA --- */
+.header-logos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #2f6f4f;
+}
+
+.logo-left {
+  height: 135px;
+  max-width: 230px;
+  object-fit: contain;
+}
+
+.logo-right {
+  height: 135px;
+  max-width: 230px;
+  object-fit: contain;
+}
+
+/* --- TITULO CENTRADO --- */
+.titulo-section {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 35px;
+}
+
+.titulo {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2f6f4f;
+  margin-bottom: 8px;
+}
+
+.subtitulo {
+  color: #4b5563;
+  font-size: 16px;
+}
+
+/* --- TARJETAS --- */
+.roles {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 300px;
+  padding: 35px 25px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-top: 5px solid #2f6f4f;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.card h2 {
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.card {
+  border: none;
+  text-align: left;
+  font-family: inherit;
+}
+.card:focus {
+  outline: 3px solid rgba(47, 111, 79, 0.25);
+  outline-offset: 3px;
+}
